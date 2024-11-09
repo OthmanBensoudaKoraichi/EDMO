@@ -1,25 +1,21 @@
 import streamlit as st
+import requests
 import base64
-import streamlit as st
+from io import BytesIO
 
 def get_image_base64(image_path):
-    with open(image_path, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode()
-    return f"data:image/jpeg;base64,{encoded_string}"
+    if image_path.startswith(('http://', 'https://')):
+        # For URLs: download the image first
+        response = requests.get(image_path)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        image_content = response.content
+    else:
+        # For local files: read directly
+        with open(image_path, "rb") as image_file:
+            image_content = image_file.read()
 
+    return base64.b64encode(image_content).decode()
 
-import streamlit as st
-import base64
-
-
-def get_image_base64(image_path):
-    """
-    Convert an image file to base64 format.
-    """
-    with open(image_path, "rb") as image_file:
-        base64_bytes = base64.b64encode(image_file.read())
-        base64_string = base64_bytes.decode("utf-8")
-    return base64_string
 
 
 def set_bg_image(image_path, opacity=0.9, deploy=False):
@@ -64,3 +60,63 @@ def set_bg_image(image_path, opacity=0.9, deploy=False):
             """,
             unsafe_allow_html=True,
         )
+def set_button_style():
+    """
+    Sets custom style for Streamlit buttons with a pinkish-red theme.
+    Returns the CSS as a string.
+    """
+    button_style = """
+        <style>
+            .stButton > button {
+                background-color: #CB3A5F;
+                color: white;
+                font-weight: bold;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+            }
+            .stButton > button:hover {
+                background-color: #A32E4B;
+            }
+        </style>
+    """
+    return button_style
+
+def set_container_style():
+    """
+    Sets custom style for containers with teal and golden yellow accents.
+    Returns the CSS as a string.
+    """
+    container_style = """
+        <style>
+            .container {
+                background-color: #F9F9F9;
+                padding: 20px;
+                margin: 10px 0;
+                border-radius: 8px;
+                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+                border-left: 5px solid #CB3A5F;
+            }
+            .location-title {
+                font-size: 1.7em;
+                font-weight: bold;
+                color: #F5C042;
+            }
+            .rating {
+                font-size: 1.2em;
+                color: #6BD0C3;
+                font-weight: bold;
+            }
+            .sentiment {
+                font-size: 1em;
+                color: #555555;
+            }
+            h3 {
+                color: #03045A;
+                font-size: 1.6em;
+                font-weight: bold;
+                margin-top: 15px;
+            }
+        </style>
+    """
+    return container_style

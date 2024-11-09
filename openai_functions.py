@@ -1,7 +1,6 @@
 import streamlit as st
 from openai import OpenAI
 
-
 def analyze_comment(dic_comments):
     """
     Analyzes customer feedback for each location in the dictionary, providing
