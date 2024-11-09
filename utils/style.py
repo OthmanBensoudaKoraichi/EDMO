@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 import base64
-from io import BytesIO
 import pandas as pd
 
 def get_image_base64(image_path):
