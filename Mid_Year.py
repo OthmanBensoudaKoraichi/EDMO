@@ -1,8 +1,13 @@
 import streamlit as st
 from utils import data_cleaning, google_services, openai_functions, style
 
-# Set the page configuration to wide mode
-st.set_page_config(layout="wide", page_title="EDMO Mid-year Feedback Dashboard")
+# Set page configuration with favicon and collapsed sidebar
+st.set_page_config(
+    layout="wide",
+    page_title="EDMO End of Year Feedback Dashboard",
+    page_icon="https://raw.githubusercontent.com/OthmanBensoudaKoraichi/EDMO/refs/heads/main/images/edmo_logo.png",
+    initial_sidebar_state="expanded"
+)
 
 def main():
     # Display the logo in the sidebar using the GitHub URL
