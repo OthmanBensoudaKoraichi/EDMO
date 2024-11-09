@@ -9,6 +9,8 @@ st.set_page_config(layout="wide", page_title="EDMO End of Year Feedback Dashboar
 
 
 def main():
+    # Title
+    st.markdown("<h1 style='color: #6BD0C3;'>EDMO End of Year Feedback Analysis Dashboard</h1>", unsafe_allow_html=True)
     # Get all feedback data
     response_encoding, dimensions, satisfaction_indices = data_processing.get_feedback_data()
 
