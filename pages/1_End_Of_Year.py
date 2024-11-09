@@ -9,6 +9,9 @@ st.set_page_config(layout="wide", page_title="EDMO End of Year Feedback Dashboar
 
 
 def main():
+    # Display the logo in the sidebar using the GitHub URL
+    logo_url = "https://raw.githubusercontent.com/OthmanBensoudaKoraichi/EDMO/refs/heads/main/images/edmo_logo.png"
+    st.sidebar.image(logo_url, use_column_width=True)
     # Title
     st.markdown("<h1 style='color: #6BD0C3;'>EDMO End of Year Feedback Analysis Dashboard</h1>", unsafe_allow_html=True)
     # Get all feedback data

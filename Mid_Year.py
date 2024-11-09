@@ -5,6 +5,9 @@ from utils import data_cleaning, google_services, openai_functions, style
 st.set_page_config(layout="wide", page_title="EDMO Mid-year Feedback Dashboard")
 
 def main():
+    # Display the logo in the sidebar using the GitHub URL
+    logo_url = "https://raw.githubusercontent.com/OthmanBensoudaKoraichi/EDMO/refs/heads/main/images/edmo_logo.png"
+    st.sidebar.image(logo_url, use_column_width=True)
     # Set background image from style module
     style.set_bg_image(image_path="https://raw.githubusercontent.com/OthmanBensoudaKoraichi/EDMO/refs/heads/main/images/colorkit.png", opacity=0.3)
 
