@@ -1,9 +1,5 @@
 import streamlit as st
-import pandas as pd
-import openai_functions
-import style
-import data_cleaning
-import google_services
+from utils import data_cleaning, google_services, openai_functions, style
 
 # Set the page configuration to wide mode
 st.set_page_config(layout="wide", page_title="EDMO End of Session Feedback Dashboard")
@@ -36,7 +32,7 @@ def main():
 
     # Apply button and container styles from style module
     st.markdown(style.set_button_style(), unsafe_allow_html=True)
-    st.markdown(style.set_container_style(), unsafe_allow_html=True)
+    st.markdown(style.set_container_style_midyear_endofsession(), unsafe_allow_html=True)
 
     # Primary Update Dashboard button
     if st.button("Update Dashboard"):
