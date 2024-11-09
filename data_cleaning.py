@@ -32,8 +32,6 @@ def clean_data_midyear_endofession(df):
 
 
 
-
-
 # Function to group data and calculate mean values
 def create_grouped_df(cleaned_mid):
     """
@@ -122,24 +120,28 @@ def load_and_prepare_data(worksheet_name, sheet_name="edmo_dashboard"):
     return feedback, df_combined_mean, dic_comments
 
 
-
-
-def process_end_of_year_data():
+def get_feedback_lists_by_indices(endofyear_df, positive_feedback_index, improvement_feedback_index):
     """
-    Unique processing logic for End of Year feedback data.
+    Extracts feedback columns by their indices from the dataframe and stores each in a list.
+
+    Parameters:
+        endofyear_df (pd.DataFrame): DataFrame containing the end of year data.
+        positive_feedback_index (int): Column index for positive feedback.
+        improvement_feedback_index (int): Column index for improvement feedback.
+
+    Returns:
+        dict: Dictionary with two lists: 'positive_feedback' and 'improvement_feedback'.
     """
-    # Load data specific to End of Year (you can customize this to load specific data for end of year)
-    dataframes = google_services.load_google_sheets_data("edmo_dashboard")
-    df_endofyear_eng, df_endofyear_spa, feedback_endofyear = dataframes[1:4]
+    # Extract the positive feedback column using the index, removing any NaN values
+    positive_feedback_list = endofyear_df.iloc[:, positive_feedback_index].dropna().tolist()
 
-    # Combine English and Spanish end-of-year data
-    combined_df = pd.concat([df_endofyear_eng, df_endofyear_spa], ignore_index=True)
+    # Extract the improvement feedback column using the index, removing any NaN values
+    improvement_feedback_list = endofyear_df.iloc[:, improvement_feedback_index].dropna().tolist()
 
-    # Perform any specific cleaning and processing
-    cleaned_df = clean_data_endofyear(combined_df)
-    df_combined_mean = create_grouped_df(cleaned_df)
-    dic_comments = create_comments_dict(cleaned_df)
+    # Return the lists as a dictionary
+    return {
+        "positive_feedback": positive_feedback_list,
+        "improvement_feedback": improvement_feedback_list
+    }
 
-    feedback = feedback_endofyear
 
-    return feedback, df_combined_mean, dic_comments

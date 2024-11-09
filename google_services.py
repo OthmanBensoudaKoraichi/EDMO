@@ -81,3 +81,38 @@ def send_to_google_sheet(analysis_dict, sheet_name="edmo_dashboard", worksheet_n
     # Clear any existing data in the sheet and insert new data
     sheet.clear()
     sheet.update("A1", data_to_insert)  # Starting from cell A1
+
+
+def send_feedback_to_google_sheet(positive_summary, improvement_summary, sheet_name="edmo_dashboard",
+                                  worksheet_name="feedback_endofyear"):
+    """
+    Sends the summarized positive and improvement feedback to the specified Google Sheet and worksheet.
+
+    Parameters:
+    - positive_summary (str): Summary of positive feedback.
+    - improvement_summary (str): Summary of improvement feedback.
+    - sheet_name (str): Name of the Google Sheet.
+    - worksheet_name (str): Name of the worksheet in the Google Sheet.
+    """
+    # Load credentials
+    scope, credentials_info = load_credentials()
+
+    # Authorize the client
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_info, scope)
+    client = gspread.authorize(creds)
+
+    # Open the Google Sheet and access the specified worksheet
+    sheet = client.open(sheet_name).worksheet(worksheet_name)
+
+    # Get the current date
+    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Prepare the data for insertion as a list of lists for Google Sheets
+    data_to_insert = [
+        ["Positive Feedback Summary", "Improvement Feedback Summary", "Date Sent"],  # Header row
+        [positive_summary, improvement_summary, current_date]
+    ]
+
+    # Clear existing data and insert the new data
+    sheet.clear()
+    sheet.update("A1", data_to_insert)  # Starting from cell A1
